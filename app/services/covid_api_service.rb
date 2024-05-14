@@ -12,10 +12,15 @@ class CovidApiService
     response.parsed_response
   end
 
-  def self.fetch_all_countries_data
+  def self.fetch_all_countries_data(page_number, page_size)
     response = get("/countries")
-    parsed_response = response.parsed_response
-    parsed_response.sort_by { |country| -country["cases"] }
+    countries_data = response.parsed_response
+
+    sorted_countries = countries_data.sort_by { |country| -country["cases"] }
+
+    Kaminari.paginate_array(sorted_countries)
+      .page(page_number)
+      .per(page_size)
   end
 
   def self.united_states
