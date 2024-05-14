@@ -8,10 +8,11 @@
         <p class="text-gray-800"><%= @london_data["cases"] %></p>
       </div>
 
-      <div class="pb-12">
+      <div class="mb-4">
         <h3 class="text-lg font-semibold">Total Deaths:</h3>
         <p class="text-gray-800"><%= @london_data["deaths"] %></p>
       </div>
+
       <%= pie_chart [
         ["Cases", @london_data["cases"]],
         ["Deaths", @london_data["deaths"]],
@@ -29,14 +30,139 @@
         <p class="text-gray-800"><%= @paris_data["cases"] %></p>
       </div>
 
-      <div class="pb-12">
+      <div class="mb-4">
         <h3 class="text-lg font-semibold">Total Deaths:</h3>
         <p class="text-gray-800"><%= @paris_data["deaths"] %></p>
       </div>
-      <%= pie_chart [["Cases", @paris_data["cases"]], ["Deaths", @paris_data["deaths"]]],
+
+      <%= area_chart [["Cases", @paris_data["cases"]], ["Deaths", @paris_data["deaths"]]],
       colors: %w[#36a2eb #ff6384],
       donut: true,
       legend: "bottom" %>
     </div>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8 my-12">
+    <div class="bg-gray-100 p-6 rounded-lg">
+      <h2 class="text-2xl font-bold mb-4">California</h2>
+
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold">Total Cases:</h3>
+        <p class="text-gray-800"><%= @states[0]["cases"] %></p>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold">Total Deaths:</h3>
+        <p class="text-gray-800"><%= @states[0]["deaths"] %></p>
+      </div>
+
+      <%= bar_chart [["Cases", @states[0]["cases"]], ["Deaths", @states[0]["deaths"]]],
+      colors: %w[#36a2eb #ff6384],
+      donut: true,
+      legend: "bottom" %>
+    </div>
+
+    <div class="bg-gray-100 p-6 rounded-lg">
+      <h2 class="text-2xl font-bold mb-4">Texax</h2>
+
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold">Total Cases:</h3>
+        <p class="text-gray-800"><%= @states[1]["cases"] %></p>
+      </div>
+
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold">Total Deaths:</h3>
+        <p class="text-gray-800"><%= @states[1]["deaths"] %></p>
+      </div>
+
+      <%= line_chart [["Cases", @states[1]["cases"]], ["Deaths", @states[1]["deaths"]]],
+      colors: %w[#36a2eb #ff6384],
+      donut: true,
+      legend: "bottom" %>
+    </div>
+  </div>
+
+  <div class="mt-12">
+    <h2 class="text-2xl font-bold mb-4">Worldwide Stats</h2>
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+      <div class="bg-gray-100 p-6 rounded-lg flex justify-between items-center">
+        <h3 class="text-lg font-semibold">Cases:</h3>
+        <p class="text-gray-800"><%= @world_wide["cases"] %></p>
+      </div>
+
+      <div class="bg-gray-100 p-6 rounded-lg flex justify-between items-center">
+        <h3 class="text-lg font-semibold">Deaths:</h3>
+        <p class="text-gray-800"><%= @world_wide["deaths"] %></p>
+      </div>
+
+      <div class="bg-gray-100 p-6 rounded-lg flex justify-between items-center">
+        <h3 class="text-lg font-semibold">Recovered:</h3>
+        <p class="text-gray-800"><%= @world_wide["recovered"] %></p>
+      </div>
+
+      <div class="bg-gray-100 p-6 rounded-lg flex justify-between items-center">
+        <h3 class="text-lg font-semibold">Critical:</h3>
+        <p class="text-gray-800"><%= @world_wide["critical"] %></p>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="container mx-auto px-4 py-8">
+    <h2 class="text-2xl font-bold mb-4">COVID-19 Stats for All Countries</h2>
+
+    <div class="bg-gray-100 p-6 rounded-lg">
+      <%= area_chart @countries_data.map { |country|
+        [country["country"], country["cases"]]
+      },
+      xtitle: "Countries",
+      ytitle: "Total Cases",
+      library: {
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+          },
+        },
+      } %>
+    </div>
+
+    <div class="bg-gray-100 p-6 rounded-lg my-12">
+      <%= pie_chart @countries_data.map { |country|
+        [country["country"], country["cases"]]
+      },
+      xtitle: "Countries",
+      ytitle: "Total Cases",
+      library: {
+        scales: {
+          x: {
+            stacked: true,
+          },
+          y: {
+            stacked: true,
+          },
+        },
+      } %>
+    </div>
+
+    <% @countries_data.each do |country_data| %>
+      <div class="bg-gray-100 p-6 rounded-lg mb-4">
+        <h2 class="text-2xl font-bold mb-4"><%= country_data["country"] %></h2>
+
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold">Total Cases:</h3>
+          <p class="text-gray-800"><%= country_data["cases"] %></p>
+        </div>
+
+        <div class="mb-4">
+          <h3 class="text-lg font-semibold">Total Deaths:</h3>
+          <p class="text-gray-800"><%= country_data["deaths"] %></p>
+        </div>
+      </div>
+    <% end %>
+
   </div>
 </div>

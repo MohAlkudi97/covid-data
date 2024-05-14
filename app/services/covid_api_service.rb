@@ -7,8 +7,19 @@ class CovidApiService
     response.parsed_response
   end
 
-  def self.fetch_all
+  def self.world_wide
     response = get("/all")
+    response.parsed_response
+  end
+
+  def self.fetch_all_countries_data
+    response = get("/countries")
+    parsed_response = response.parsed_response
+    parsed_response.sort_by { |country| -country["cases"] }
+  end
+
+  def self.united_states
+    response = get("/states")
     response.parsed_response
   end
 end
