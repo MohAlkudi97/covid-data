@@ -1,0 +1,2 @@
+module CovidDataHelper
+end

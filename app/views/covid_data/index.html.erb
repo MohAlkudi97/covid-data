@@ -1,0 +1,42 @@
+<div class="container mx-auto px-4 py-8">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+    <div class="bg-gray-100 p-6 rounded-lg">
+      <h2 class="text-2xl font-bold mb-4">London</h2>
+
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold">Total Cases:</h3>
+        <p class="text-gray-800"><%= @london_data["cases"] %></p>
+      </div>
+
+      <div class="pb-12">
+        <h3 class="text-lg font-semibold">Total Deaths:</h3>
+        <p class="text-gray-800"><%= @london_data["deaths"] %></p>
+      </div>
+      <%= pie_chart [
+        ["Cases", @london_data["cases"]],
+        ["Deaths", @london_data["deaths"]],
+      ],
+      colors: %w[#36a2eb #ff6384],
+      donut: true,
+      legend: "bottom" %>
+    </div>
+
+    <div class="bg-gray-100 p-6 rounded-lg">
+      <h2 class="text-2xl font-bold mb-4">Paris</h2>
+
+      <div class="mb-4">
+        <h3 class="text-lg font-semibold">Total Cases:</h3>
+        <p class="text-gray-800"><%= @paris_data["cases"] %></p>
+      </div>
+
+      <div class="pb-12">
+        <h3 class="text-lg font-semibold">Total Deaths:</h3>
+        <p class="text-gray-800"><%= @paris_data["deaths"] %></p>
+      </div>
+      <%= pie_chart [["Cases", @paris_data["cases"]], ["Deaths", @paris_data["deaths"]]],
+      colors: %w[#36a2eb #ff6384],
+      donut: true,
+      legend: "bottom" %>
+    </div>
+  </div>
+</div>
